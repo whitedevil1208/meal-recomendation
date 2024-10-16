@@ -1,0 +1,141 @@
+:root {
+    --primary-color: #3498db;      /* Muted Purple */
+    --secondary-color: #55efc4;    /* Soft Teal */
+    --accent-color: #f1c40f;       /* Bright Coral */
+    --text-color: #2d3436;         /* Dark Charcoal */
+    --background-color: #fdfaf6;   /* Light Ivory */
+    --border-color: #dfe6e9;       /* Cool Light Gray */
+}
+
+
+body {
+    font-family: 'Quicksand', sans-serif; /* Use Quicksand for round, soft font */
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background-size: cover;
+    color: var(--text-color);
+}
+
+.container {
+    background-color: white;
+    border-radius: 25px;   /* Rounder corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    padding: 40px;
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    position: relative;
+    border: 1px solid var(--border-color);
+    margin: 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-weight: 700;    /* Make heading bold */
+    text-transform: uppercase;
+    font-size: 24px;
+}
+
+
+form, .page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input, button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 20px;  /* Round corners for input and button */
+    border: 1px solid var(--border-color);
+    font-family: 'Quicksand', sans-serif; /* Rounded font */
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    border-radius: 20px;  /* Rounded button */
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+}
+
+#selection-page button {
+    width: 45%;
+    margin: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 20px;  /* Rounded selection buttons */
+}
+
+#selection-page button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.2);
+}
+
+.page {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+p {
+    color: var(--text-color);
+    background-color: var(--accent-color); /* Accent color background */
+    padding: 15px;
+    border-radius: 20px;  /* Rounded corners for text area */
+    margin-top: 20px;
+    font-weight: 500;
+    animation: fadeIn 0.5s ease;
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;   /* Keep this as a circle */
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+}
+
+.back-button:hover {
+    background-color: var(--primary-color);
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}

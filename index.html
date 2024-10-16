@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Food Recommendation</title>
+    <!-- Import the Quicksand font -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" id="back-btn" style="display: none;">&#8592;</button>
+
+        <!-- Login Page -->
+        <div id="login-page" class="page" style="display:block;">
+            <h2>Welcome Back!</h2>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+
+        <!-- Selection Page -->
+        <div id="selection-page" class="page">
+            <h2>What's Your Preference?</h2>
+            <div>
+                <button id="normal-btn">Healthy Eating</button>
+                <button id="diseased-btn">Special Diet</button>
+            </div>
+        </div>
+
+        <!-- Normal Input Page -->
+        <div id="normal-page" class="page">
+            <h2>Personalized Food Recommendation</h2>
+            <input type="text" id="meal-type" placeholder="Meal Type (e.g., breakfast)">
+            <input type="text" id="food-type" placeholder="Food Type (e.g., veg)">
+            <input type="text" id="person-type" placeholder="Lifestyle (e.g., athletic)">
+            <input type="text" id="diet-type" placeholder="Diet Goal (e.g., high protein)">
+            <button id="normal-submit">Get Your Recommendation</button>
+            <p id="recommendation-result"></p>
+        </div>
+
+        <!-- Diseased Input Page -->
+        <div id="diseased-page" class="page">
+            <h2>Special Diet Recommendation</h2>
+            <input type="text" id="disease" placeholder="Health Condition (e.g., diabetes)">
+            <button id="disease-submit">Get Your Recommendation</button>
+            <p id="disease-recommendation-result"></p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
