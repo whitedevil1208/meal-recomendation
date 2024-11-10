@@ -9,7 +9,12 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer, PorterStemmer
 import nltk
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi import HTTPException
+import openai
 
+
+# Allow specific orig
 # Download NLTK resources
 nltk.download('stopwords')
 nltk.download('wordnet')
@@ -135,6 +140,22 @@ def get_recommendation():
 
 # Run the system
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",  # React app during development
+    "https://your-frontend-domain.com",  # Production front-end domain
+]
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # List of allowed origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all HTTP methods (GET, POST, PUT, etc.)
+    allow_headers=["*"],  # Allows all headers, or restrict to specific ones like 'Content-Type'
+)
+
+
 @app.post("/rec")
 def get_rec(prompt:str):
     extracted_entities = extract_entities(prompt)
@@ -143,4 +164,61 @@ def get_rec(prompt:str):
     print("Recommended Food:", recommendation)
     return {"rec":recommendation}
 
+import requests
 
+# Set your Edamam API credentials
+EDAMAM_APP_ID = '2a98c6a4'  # Replace with your Edamam APP ID
+EDAMAM_APP_KEY = '75704984fc122dc3153ae7a943f3cb56'  # Replace with your Edamam APP KEY
+
+# Function to get nutritional information from Edamam API
+def get_nutritional_info(food_item):
+    url = f"https://api.edamam.com/api/nutrition-data?app_id={EDAMAM_APP_ID}&app_key={EDAMAM_APP_KEY}&nutrition-type=logging&ingr={food_item}"
+    
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
+
+# Function to format nutritional information for output
+def format_nutrition_info(nutrition_data):
+    if nutrition_data:
+        nutrients = nutrition_data.get('totalNutrients', {})
+        formatted_info = []
+        for nutrient, details in nutrients.items():
+            formatted_info.append(f"{details['label']}: {details['quantity']} {details['unit']}")
+        return "\n".join(formatted_info)
+    return "Nutritional information not available."
+
+# Function to get user input and perform nutritional analysis
+@app.post("/nut")
+def get_nutritional_analysis(food_item:str):
+    # Get user input for food item
+
+    # Get nutritional analysis for the food item
+    nutrition = get_nutritional_info(food_item)
+    nutritional_analysis = format_nutrition_info(nutrition)
+    print("Nutritional Analysis:\n", nutritional_analysis)
+    return {"res":nutritional_analysis}
+
+openai.api_key = "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"
+
+@app.post("/analyze")
+async def analyze_input(user_input: str):
+    prompt = user_input
+    
+    try:
+        # Call OpenAI API to analyze user input
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}]
+        )
+        # Extract the response text
+        openai_response = response.choices[0].message['content'].strip()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error from OpenAI: {str(e)}")
+
+    return {
+        "analysis": openai_response
+    }
